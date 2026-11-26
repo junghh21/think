@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>상속 대응 정리</title>
 <style>
-body{margin:0;background:#fff;color:#111;font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;font-size:22px;line-height:1.8}
+body{word-break:keep-all;overflow-wrap:break-word;margin:0;background:#fff;color:#111;font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;font-size:22px;line-height:1.8}
 main{max-width:760px;margin:0 auto;padding:24px 20px 80px}
 h1{font-size:32px;line-height:1.4}
 h2{font-size:28px;margin-top:2em;border-bottom:3px solid #333;padding-bottom:6px}
@@ -22,13 +22,35 @@ td{border:0;padding:8px 14px;font-size:21px}
 td.empty{display:none}
 td::before{content:attr(data-label);display:block;font-size:17px;font-weight:700;color:#444;margin-bottom:2px}
 }
+p.say{background:#fff7d6;border:2px solid #d9b400;border-radius:12px;padding:14px 18px;font-style:normal;font-size:23px}
+h2{background:#e8f0fe;padding:10px 12px;border-bottom:0;border-left:8px solid #1a4fb4;border-radius:4px}
 ol,ul{padding-left:1.4em}
 li{margin:.4em 0}
+nav.toc{display:flex;flex-direction:column;gap:10px;margin:18px 0 8px}
+nav.toc a{display:block;padding:14px 16px;border:2px solid #1a4fb4;border-radius:10px;color:#0b2f7a;font-weight:700;text-decoration:none;font-size:21px;line-height:1.4}
+nav.toc a:focus,nav.toc a:hover{background:#e8f0fe;outline:3px solid #000}
+.size{position:sticky;top:0;background:#fff;border-bottom:2px solid #333;padding:8px 20px;display:flex;gap:10px;align-items:center;z-index:5}
+.size span{font-size:18px;font-weight:700}
+.size button{font:inherit;font-size:20px;font-weight:700;min-width:64px;min-height:52px;border:2px solid #000;border-radius:10px;background:#fff;cursor:pointer}
+.size button:focus{outline:3px solid #1a4fb4}
+.top{display:block;margin-top:2em;font-size:19px}
+h2{scroll-margin-top:80px}
+@media print{.size,nav.toc{display:none}body{font-size:14pt}}
 </style>
 </head>
 <body>
+<div class="size"><span>글씨 크기</span><button type="button" data-d="-2">작게</button><button type="button" data-d="0">보통</button><button type="button" data-d="2">크게</button></div>
 <main>
+<nav class="toc" aria-label="목차">{{NAV}}</nav>
 {{BODY}}
 </main>
+<script>
+(function(){var r=document.documentElement,k="think-size",b=22;
+function set(n){n=Math.max(18,Math.min(34,n));document.body.style.fontSize=n+"px";try{localStorage.setItem(k,n)}catch(e){}}
+var v=0;try{v=parseInt(localStorage.getItem(k))||0}catch(e){}
+if(v)set(v);
+document.querySelectorAll(".size button").forEach(function(x){x.onclick=function(){var d=parseInt(x.dataset.d),c=parseInt(getComputedStyle(document.body).fontSize);set(d===0?b:c+d)}});
+})();
+</script>
 </body>
 </html>
